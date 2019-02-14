@@ -15,10 +15,10 @@ npm start
 
 ## Suggested next steps
 
-Themes (day/night mode?)
-Add stack (vertical slides)
-More shorcuts (skip forward by _)
-Interative things(?)
+- [ ] Themes (day/night mode?)
+- [ ] Add stack (vertical slides)
+- [ ] More shorcuts (skip forward by _)
+- [ ] Interative things(?)
 
 ## Changes
 
