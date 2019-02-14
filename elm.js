@@ -4449,10 +4449,6 @@ var _Bitwise_shiftRightZfBy = F2(function(offset, a)
 var author$project$Models$At = function (a) {
 	return {$: 'At', a: a};
 };
-var author$project$Models$WithCode = F2(
-	function (a, b) {
-		return {$: 'WithCode', a: a, b: b};
-	});
 var author$project$Models$Simple = function (a) {
 	return {$: 'Simple', a: a};
 };
@@ -4972,13 +4968,100 @@ var author$project$SlideShow$simple = function (md) {
 	return author$project$Models$Simple(
 		author$project$SlideShow$asHtml(md));
 };
-var author$project$SlideShow$withCode = F2(
-	function (md, code) {
-		return A2(
-			author$project$Models$WithCode,
-			author$project$SlideShow$asHtml(md),
-			code);
+var elm$core$Array$fromListHelp = F3(
+	function (list, nodeList, nodeListSize) {
+		fromListHelp:
+		while (true) {
+			var _n0 = A2(elm$core$Elm$JsArray$initializeFromList, elm$core$Array$branchFactor, list);
+			var jsArray = _n0.a;
+			var remainingItems = _n0.b;
+			if (_Utils_cmp(
+				elm$core$Elm$JsArray$length(jsArray),
+				elm$core$Array$branchFactor) < 0) {
+				return A2(
+					elm$core$Array$builderToArray,
+					true,
+					{nodeList: nodeList, nodeListSize: nodeListSize, tail: jsArray});
+			} else {
+				var $temp$list = remainingItems,
+					$temp$nodeList = A2(
+					elm$core$List$cons,
+					elm$core$Array$Leaf(jsArray),
+					nodeList),
+					$temp$nodeListSize = nodeListSize + 1;
+				list = $temp$list;
+				nodeList = $temp$nodeList;
+				nodeListSize = $temp$nodeListSize;
+				continue fromListHelp;
+			}
+		}
 	});
+var elm$core$Array$fromList = function (list) {
+	if (!list.b) {
+		return elm$core$Array$empty;
+	} else {
+		return A3(elm$core$Array$fromListHelp, list, _List_Nil, 0);
+	}
+};
+var author$project$SlideShow$slideShow = elm$core$Array$fromList(
+	_List_fromArray(
+		[
+			author$project$SlideShow$simple('\n# Elm Present\n\n## James Porter\n\n@complexview\n'),
+			author$project$SlideShow$simple('\n# Types of Data Vis\n\n* Exploratory\n* Static publication\n* Interactive (web?)\n\nOnly focusing on last one\n'),
+			author$project$SlideShow$simple('\n# Frameworks\n\n* Easy/simple (Chart.js)\n* Low level (D3?)\n* Balanced (Victory?)\n* No Framework (React, Elm)\n'),
+			author$project$SlideShow$simple('\n# A few minutes\n\nIf you already know Elm can learn enough to do interactive datavis\n'),
+			author$project$SlideShow$simple('\n# SVG Primatives\n\n* g group\n* rect rectangle\n* circle\n* ellipse\n* polygon\n* text_ (text tag, use text for content)\n\nLook these up details later, Elm has very direct support like for HTML.\n        '),
+			author$project$SlideShow$simple('# Generally works well\n\n* Full control (D3 style, but without dependency)\n* Type checking really helpful\n* Easy to extract functions when things become complicated\n* Particularly good for transitions (as just another part of state)\n* All usual strengths of Elm\n'),
+			author$project$SlideShow$simple('# Frustrations\n* Types: low level API expects strings\n    * Could trivially create Float or Integer versions\n    * But actually probably want both (and can be encapsulated)\n* Slower to get started\n\n'),
+			author$project$SlideShow$simple('\n# Thanks\n\n## James Porter\n\nFollow me *@complexview*, for the slides:\n\n[elm-data.amimetic.co.uk](http://elm-data.amimetic.co.uk)\n\nSource code:\n\n[https://github.com/jamesporter/Elm-Present](https://github.com/jamesporter/Elm-Present)\n')
+		]));
+var author$project$Present$initialModel = {
+	position: author$project$Models$At(0),
+	slides: author$project$SlideShow$slideShow
+};
+var elm$core$Platform$Cmd$batch = _Platform_batch;
+var elm$core$Platform$Cmd$none = elm$core$Platform$Cmd$batch(_List_Nil);
+var author$project$Present$init = function (flags) {
+	return _Utils_Tuple2(author$project$Present$initialModel, elm$core$Platform$Cmd$none);
+};
+var author$project$Messages$KeyDown = function (a) {
+	return {$: 'KeyDown', a: a};
+};
+var author$project$Messages$TimeUpdate = function (a) {
+	return {$: 'TimeUpdate', a: a};
+};
+var elm$browser$Browser$AnimationManager$Delta = function (a) {
+	return {$: 'Delta', a: a};
+};
+var elm$browser$Browser$AnimationManager$State = F3(
+	function (subs, request, oldTime) {
+		return {oldTime: oldTime, request: request, subs: subs};
+	});
+var elm$core$Task$succeed = _Scheduler_succeed;
+var elm$browser$Browser$AnimationManager$init = elm$core$Task$succeed(
+	A3(elm$browser$Browser$AnimationManager$State, _List_Nil, elm$core$Maybe$Nothing, 0));
+var elm$browser$Browser$External = function (a) {
+	return {$: 'External', a: a};
+};
+var elm$browser$Browser$Internal = function (a) {
+	return {$: 'Internal', a: a};
+};
+var elm$browser$Browser$Dom$NotFound = function (a) {
+	return {$: 'NotFound', a: a};
+};
+var elm$core$Basics$never = function (_n0) {
+	never:
+	while (true) {
+		var nvr = _n0.a;
+		var $temp$_n0 = nvr;
+		_n0 = $temp$_n0;
+		continue never;
+	}
+};
+var elm$core$Task$Perform = function (a) {
+	return {$: 'Perform', a: a};
+};
+var elm$core$Task$init = elm$core$Task$succeed(_Utils_Tuple0);
 var elm$core$List$foldrHelper = F4(
 	function (fn, acc, ctr, ls) {
 		if (!ls.b) {
@@ -5048,348 +5131,6 @@ var elm$core$List$map = F2(
 			_List_Nil,
 			xs);
 	});
-var elm$svg$Svg$trustedNode = _VirtualDom_nodeNS('http://www.w3.org/2000/svg');
-var elm$svg$Svg$g = elm$svg$Svg$trustedNode('g');
-var elm$svg$Svg$line = elm$svg$Svg$trustedNode('line');
-var elm$svg$Svg$Attributes$opacity = _VirtualDom_attribute('opacity');
-var elm$svg$Svg$Attributes$stroke = _VirtualDom_attribute('stroke');
-var elm$svg$Svg$Attributes$strokeWidth = _VirtualDom_attribute('stroke-width');
-var elm$svg$Svg$Attributes$x1 = _VirtualDom_attribute('x1');
-var elm$svg$Svg$Attributes$x2 = _VirtualDom_attribute('x2');
-var elm$svg$Svg$Attributes$y1 = _VirtualDom_attribute('y1');
-var elm$svg$Svg$Attributes$y2 = _VirtualDom_attribute('y2');
-var author$project$Visuals$background = function () {
-	var oneToNine = A2(elm$core$List$range, 1, 9);
-	return A2(
-		elm$svg$Svg$g,
-		_List_fromArray(
-			[
-				elm$svg$Svg$Attributes$strokeWidth('0.4'),
-				elm$svg$Svg$Attributes$stroke('white'),
-				elm$svg$Svg$Attributes$opacity('0.6')
-			]),
-		_Utils_ap(
-			A2(
-				elm$core$List$map,
-				function (n) {
-					return A2(
-						elm$svg$Svg$line,
-						_List_fromArray(
-							[
-								elm$svg$Svg$Attributes$x1(
-								elm$core$String$fromInt(10 * n)),
-								elm$svg$Svg$Attributes$x2(
-								elm$core$String$fromInt(10 * n)),
-								elm$svg$Svg$Attributes$y1('0'),
-								elm$svg$Svg$Attributes$y2('100')
-							]),
-						_List_Nil);
-				},
-				oneToNine),
-			A2(
-				elm$core$List$map,
-				function (n) {
-					return A2(
-						elm$svg$Svg$line,
-						_List_fromArray(
-							[
-								elm$svg$Svg$Attributes$y1(
-								elm$core$String$fromInt(10 * n)),
-								elm$svg$Svg$Attributes$y2(
-								elm$core$String$fromInt(10 * n)),
-								elm$svg$Svg$Attributes$x1('0'),
-								elm$svg$Svg$Attributes$x2('100')
-							]),
-						_List_Nil);
-				},
-				oneToNine)));
-}();
-var elm$core$Tuple$second = function (_n0) {
-	var y = _n0.b;
-	return y;
-};
-var elm$svg$Svg$circle = elm$svg$Svg$trustedNode('circle');
-var elm$svg$Svg$Attributes$cx = _VirtualDom_attribute('cx');
-var elm$svg$Svg$Attributes$cy = _VirtualDom_attribute('cy');
-var elm$svg$Svg$Attributes$fill = _VirtualDom_attribute('fill');
-var elm$svg$Svg$Attributes$r = _VirtualDom_attribute('r');
-var author$project$Visuals$circles = function () {
-	var specs = _List_fromArray(
-		[
-			_Utils_Tuple2('45', 'white'),
-			_Utils_Tuple2('30', 'blue'),
-			_Utils_Tuple2('15', 'red')
-		]);
-	return A2(
-		elm$svg$Svg$g,
-		_List_fromArray(
-			[
-				elm$svg$Svg$Attributes$opacity('0.8')
-			]),
-		A2(
-			elm$core$List$map,
-			function (n) {
-				return A2(
-					elm$svg$Svg$circle,
-					_List_fromArray(
-						[
-							elm$svg$Svg$Attributes$cx('50'),
-							elm$svg$Svg$Attributes$cy('50'),
-							elm$svg$Svg$Attributes$r(n.a),
-							elm$svg$Svg$Attributes$fill(n.b)
-						]),
-					_List_Nil);
-			},
-			specs));
-}();
-var elm$html$Html$div = _VirtualDom_node('div');
-var elm$html$Html$h1 = _VirtualDom_node('h1');
-var elm$json$Json$Encode$string = _Json_wrap;
-var elm$html$Html$Attributes$stringProperty = F2(
-	function (key, string) {
-		return A2(
-			_VirtualDom_property,
-			key,
-			elm$json$Json$Encode$string(string));
-	});
-var elm$html$Html$Attributes$class = elm$html$Html$Attributes$stringProperty('className');
-var elm$svg$Svg$svg = elm$svg$Svg$trustedNode('svg');
-var elm$virtual_dom$VirtualDom$text = _VirtualDom_text;
-var elm$svg$Svg$text = elm$virtual_dom$VirtualDom$text;
-var elm$svg$Svg$Attributes$viewBox = _VirtualDom_attribute('viewBox');
-var author$project$Visuals$container = F2(
-	function (title, content) {
-		return A2(
-			elm$html$Html$div,
-			_List_Nil,
-			_List_fromArray(
-				[
-					A2(
-					elm$html$Html$h1,
-					_List_Nil,
-					_List_fromArray(
-						[
-							elm$svg$Svg$text(title)
-						])),
-					A2(
-					elm$html$Html$div,
-					_List_fromArray(
-						[
-							elm$html$Html$Attributes$class('example')
-						]),
-					_List_fromArray(
-						[
-							A2(
-							elm$svg$Svg$svg,
-							_List_fromArray(
-								[
-									elm$svg$Svg$Attributes$viewBox('0 0 100 100')
-								]),
-							content)
-						]))
-				]));
-	});
-var author$project$Visuals$colour = function (value) {
-	return (value < 400) ? '#CA6464' : ((value < 550) ? '#64B5CA' : '#64CA7A');
-};
-var elm$core$String$fromFloat = _String_fromNumber;
-var elm$svg$Svg$rect = elm$svg$Svg$trustedNode('rect');
-var elm$svg$Svg$Attributes$height = _VirtualDom_attribute('height');
-var elm$svg$Svg$Attributes$width = _VirtualDom_attribute('width');
-var elm$svg$Svg$Attributes$x = _VirtualDom_attribute('x');
-var elm$svg$Svg$Attributes$y = _VirtualDom_attribute('y');
-var author$project$Visuals$bar = F4(
-	function (value, sx, dx, withColours) {
-		return A2(
-			elm$svg$Svg$rect,
-			_List_fromArray(
-				[
-					elm$svg$Svg$Attributes$x(
-					elm$core$String$fromFloat(sx)),
-					elm$svg$Svg$Attributes$y(
-					elm$core$String$fromFloat((1000 - value) / 10.0)),
-					elm$svg$Svg$Attributes$height(
-					elm$core$String$fromFloat(value / 10.0)),
-					elm$svg$Svg$Attributes$width(
-					elm$core$String$fromFloat(dx - 2.0)),
-					elm$svg$Svg$Attributes$fill(
-					withColours ? author$project$Visuals$colour(value) : '#64B5CA')
-				]),
-			_List_Nil);
-	});
-var author$project$Visuals$zip = elm$core$List$map2(
-	F2(
-		function (a, b) {
-			return _Utils_Tuple2(a, b);
-		}));
-var author$project$Visuals$enumerated = function (list) {
-	var indexes = A2(
-		elm$core$List$range,
-		0,
-		elm$core$List$length(list) - 1);
-	return A2(author$project$Visuals$zip, indexes, list);
-};
-var author$project$Visuals$data = function (withColours) {
-	var sx = 5.0;
-	var calories = _List_fromArray(
-		[349, 370, 488, 641, 672, 518, 832]);
-	var caloriesWithIndex = author$project$Visuals$enumerated(calories);
-	var len = elm$core$List$length(calories);
-	var dx = 90.0 / len;
-	return A2(
-		elm$svg$Svg$g,
-		_List_fromArray(
-			[
-				elm$svg$Svg$Attributes$opacity('0.8')
-			]),
-		A2(
-			elm$core$List$map,
-			function (_n0) {
-				var idx = _n0.a;
-				var c = _n0.b;
-				return A4(author$project$Visuals$bar, c, sx + (dx * idx), dx, withColours);
-			},
-			caloriesWithIndex));
-};
-var elm$core$Array$fromListHelp = F3(
-	function (list, nodeList, nodeListSize) {
-		fromListHelp:
-		while (true) {
-			var _n0 = A2(elm$core$Elm$JsArray$initializeFromList, elm$core$Array$branchFactor, list);
-			var jsArray = _n0.a;
-			var remainingItems = _n0.b;
-			if (_Utils_cmp(
-				elm$core$Elm$JsArray$length(jsArray),
-				elm$core$Array$branchFactor) < 0) {
-				return A2(
-					elm$core$Array$builderToArray,
-					true,
-					{nodeList: nodeList, nodeListSize: nodeListSize, tail: jsArray});
-			} else {
-				var $temp$list = remainingItems,
-					$temp$nodeList = A2(
-					elm$core$List$cons,
-					elm$core$Array$Leaf(jsArray),
-					nodeList),
-					$temp$nodeListSize = nodeListSize + 1;
-				list = $temp$list;
-				nodeList = $temp$nodeList;
-				nodeListSize = $temp$nodeListSize;
-				continue fromListHelp;
-			}
-		}
-	});
-var elm$core$Array$fromList = function (list) {
-	if (!list.b) {
-		return elm$core$Array$empty;
-	} else {
-		return A3(elm$core$Array$fromListHelp, list, _List_Nil, 0);
-	}
-};
-var author$project$SlideShow$slideShow = elm$core$Array$fromList(
-	_List_fromArray(
-		[
-			author$project$SlideShow$simple('\n# Elm Data\n\n## James Porter\n\n@complexview\n'),
-			author$project$SlideShow$simple('\n# Types of Data Vis\n\n* Exploratory\n* Static publication\n* Interactive (web?)\n\nOnly focusing on last one\n'),
-			author$project$SlideShow$simple('\n# Frameworks\n\n* Easy/simple (Chart.js)\n* Low level (D3?)\n* Balanced (Victory?)\n* No Framework (React, Elm)\n'),
-			author$project$SlideShow$simple('\n# A few minutes\n\nIf you already know Elm can learn enough to do interactive datavis\n'),
-			A2(author$project$SlideShow$withCode, '\n# This is Elm\n\nAll the slides are in Elm (most with Markdown)\n\n[elm-data.amimetic.co.uk](http://elm-data.amimetic.co.uk)\n\n(Datavis, making a game and making a slide show framework all great ways to learn Elm.)\n', '\ntype Slide\n    = Simple (Html Msg)\n    | WithCode (Html Msg) String\n\n--Elm Markdown\nimport Markdown exposing (toHtml)\n\n--simplify\nasHtml : String -> Html Msg\n\n--make it ergonomic for easy slides\nsimple : String -> Slide\n\nwithCode : String -> String -> Slide\nwithCode md code =\n    WithCode (asHtml md) code\n'),
-			A2(author$project$SlideShow$withCode, '\n# Transitions\n\nUsually this is the hard bit\n\n(or the bit with unstructured magical messiness)\n', '\ntype Position\n    = At Int\n    | Forward Int Int Float\n    | Backward Int Int Float\n\nSub.batch <|\n    [ Keyboard.downs KeyDown\n    , AnimationFrame.diffs TimeUpdate ]\n'),
-			author$project$SlideShow$simple('\n# SVG Primatives\n\n* g group\n* rect rectangle\n* circle\n* ellipse\n* polygon\n* text_ (text tag, use text for content)\n\nLook these up details later, Elm has very direct support like for HTML.\n        '),
-			A2(
-			author$project$Models$WithCode,
-			A2(author$project$Visuals$container, 'SVG', _List_Nil),
-			'\ncontainer : List (Html Msg) -> Html Msg\ncontainer content =\n    div [ class "example" ]\n        [ svg [ viewBox "0 0 100 100" ] content\n        ]\n'),
-			A2(
-			author$project$Models$WithCode,
-			A2(
-				author$project$Visuals$container,
-				'Lines',
-				_List_fromArray(
-					[author$project$Visuals$background])),
-			'\ng [ strokeWidth "0.4", stroke "white" ]\n\n((oneToNine |> List.map (\n n -> line [ x1 (toString (10 * n)),\n             x2 (toString (10 * n)),\n             y1 "0",\n             y2 "100" ] []))\n'),
-			A2(
-			author$project$Models$WithCode,
-			A2(
-				author$project$Visuals$container,
-				'Circles',
-				_List_fromArray(
-					[author$project$Visuals$background, author$project$Visuals$circles])),
-			'\nlet\n    specs =\n        [ ( "45", "white" ), ( "35", "blue" ), ( "25", "red" )]\nin\n    g [ opacity "0.8" ] <|\n        List.map\n            ( n ->\n                circle\n                    [ cx "50"\n                    , cy "50"\n                    , r (first n)\n                    , fill (second n)\n                    ]\n                    []\n            )\n            specs\n'),
-			A2(
-			author$project$Models$WithCode,
-			A2(
-				author$project$Visuals$container,
-				'Data',
-				_List_fromArray(
-					[
-						author$project$Visuals$background,
-						author$project$Visuals$data(false)
-					])),
-			'\ncalories =\n    [ 349, 370, 488, 641, 672, 518, 832 ]\n\ncaloriesWithIndex =\n    enumerated calories\n\n[...]\n\nbar value sx dx withColours =\n    rect\n        [ x (toString sx)\n        , y (toString ((toFloat (1000 - value)) / 10.0))\n        , height (toString ((toFloat (value)) / 10.0))\n        , width (toString (dx - 2.0))\n        , fill  "#64B5CA"\n        ]\n        []\n'),
-			A2(
-			author$project$Models$WithCode,
-			A2(
-				author$project$Visuals$container,
-				'Data II',
-				_List_fromArray(
-					[
-						author$project$Visuals$background,
-						author$project$Visuals$data(true)
-					])),
-			'\ncolour : Int -> String\ncolour value =\n    if value < 400 then\n        "#CA6464"\n    else if value < 550 then\n        "#64B5CA"\n    else\n        "#64CA7A"\n'),
-			author$project$SlideShow$simple('# Generally works well\n\n* Full control (D3 style, but without dependency)\n* Type checking really helpful\n* Easy to extract functions when things become complicated\n* Particularly good for transitions (as just another part of state)\n* All usual strengths of Elm\n'),
-			author$project$SlideShow$simple('# Frustrations\n* Types: low level API expects strings\n    * Could trivially create Float or Integer versions\n    * But actually probably want both (and can be encapsulated)\n* Slower to get started\n\n'),
-			author$project$SlideShow$simple('\n# Thanks\n\n## James Porter\n\nFollow me *@complexview*, for the slides:\n\n[elm-data.amimetic.co.uk](http://elm-data.amimetic.co.uk)\n\nSource code:\n\n[github.com/jamesporter/elm-present-data](https://github.com/jamesporter/elm-present-data)\n')
-		]));
-var author$project$Present$initialModel = {
-	position: author$project$Models$At(0),
-	showCode: false,
-	slides: author$project$SlideShow$slideShow
-};
-var elm$core$Platform$Cmd$batch = _Platform_batch;
-var elm$core$Platform$Cmd$none = elm$core$Platform$Cmd$batch(_List_Nil);
-var author$project$Present$init = function (flags) {
-	return _Utils_Tuple2(author$project$Present$initialModel, elm$core$Platform$Cmd$none);
-};
-var author$project$Messages$KeyDown = function (a) {
-	return {$: 'KeyDown', a: a};
-};
-var author$project$Messages$TimeUpdate = function (a) {
-	return {$: 'TimeUpdate', a: a};
-};
-var elm$browser$Browser$AnimationManager$Delta = function (a) {
-	return {$: 'Delta', a: a};
-};
-var elm$browser$Browser$AnimationManager$State = F3(
-	function (subs, request, oldTime) {
-		return {oldTime: oldTime, request: request, subs: subs};
-	});
-var elm$core$Task$succeed = _Scheduler_succeed;
-var elm$browser$Browser$AnimationManager$init = elm$core$Task$succeed(
-	A3(elm$browser$Browser$AnimationManager$State, _List_Nil, elm$core$Maybe$Nothing, 0));
-var elm$browser$Browser$External = function (a) {
-	return {$: 'External', a: a};
-};
-var elm$browser$Browser$Internal = function (a) {
-	return {$: 'Internal', a: a};
-};
-var elm$browser$Browser$Dom$NotFound = function (a) {
-	return {$: 'NotFound', a: a};
-};
-var elm$core$Basics$never = function (_n0) {
-	never:
-	while (true) {
-		var nvr = _n0.a;
-		var $temp$_n0 = nvr;
-		_n0 = $temp$_n0;
-		continue never;
-	}
-};
-var elm$core$Task$Perform = function (a) {
-	return {$: 'Perform', a: a};
-};
-var elm$core$Task$init = elm$core$Task$succeed(_Utils_Tuple0);
 var elm$core$Task$andThen = _Scheduler_andThen;
 var elm$core$Task$map = F2(
 	function (func, taskA) {
@@ -6169,8 +5910,7 @@ var author$project$Updates$next = function (presentation) {
 				elm$core$Array$length(presentation.slides)) < 0) ? _Utils_update(
 				presentation,
 				{
-					position: A3(author$project$Models$Forward, n, n + 1, 0.0),
-					showCode: false
+					position: A3(author$project$Models$Forward, n, n + 1, 0.0)
 				}) : presentation;
 		case 'Forward':
 			return presentation;
@@ -6197,8 +5937,7 @@ var author$project$Updates$prev = function (presentation) {
 			return (n > 0) ? _Utils_update(
 				presentation,
 				{
-					position: A3(author$project$Models$Backward, n, n - 1, 0.0),
-					showCode: false
+					position: A3(author$project$Models$Backward, n, n - 1, 0.0)
 				}) : presentation;
 		case 'Backward':
 			return presentation;
@@ -6213,16 +5952,14 @@ var author$project$Updates$prev = function (presentation) {
 				});
 	}
 };
-var elm$core$Debug$log = _Debug_log;
 var ohanhi$keyboard$Keyboard$rawValue = function (_n0) {
 	var key = _n0.a;
 	return key;
 };
 var author$project$Updates$keyDown = F2(
 	function (key, presentation) {
-		var _n0 = A2(elm$core$Debug$log, 'key:', key);
-		var _n1 = ohanhi$keyboard$Keyboard$rawValue(key);
-		switch (_n1) {
+		var _n0 = ohanhi$keyboard$Keyboard$rawValue(key);
+		switch (_n0) {
 			case 'ArrowLeft':
 				return author$project$Updates$prev(presentation);
 			case 'ArrowRight':
@@ -6275,12 +6012,6 @@ var author$project$Updates$timeUpdate = F2(
 					});
 		}
 	});
-var elm$core$Basics$not = _Basics_not;
-var author$project$Updates$toggleCode = function (presentation) {
-	return _Utils_update(
-		presentation,
-		{showCode: !presentation.showCode});
-};
 var author$project$Updates$update = F2(
 	function (msg, presentation) {
 		switch (msg.$) {
@@ -6298,13 +6029,9 @@ var author$project$Updates$update = F2(
 				return _Utils_Tuple2(
 					author$project$Updates$next(presentation),
 					elm$core$Platform$Cmd$none);
-			case 'Previous':
-				return _Utils_Tuple2(
-					author$project$Updates$prev(presentation),
-					elm$core$Platform$Cmd$none);
 			default:
 				return _Utils_Tuple2(
-					author$project$Updates$toggleCode(presentation),
+					author$project$Updates$prev(presentation),
 					elm$core$Platform$Cmd$none);
 		}
 	});
@@ -6412,6 +6139,15 @@ var author$project$Models$slides = function (pres) {
 	}
 };
 var author$project$Messages$Next = {$: 'Next'};
+var elm$html$Html$div = _VirtualDom_node('div');
+var elm$json$Json$Encode$string = _Json_wrap;
+var elm$html$Html$Attributes$stringProperty = F2(
+	function (key, string) {
+		return A2(
+			_VirtualDom_property,
+			key,
+			elm$json$Json$Encode$string(string));
+	});
 var elm$html$Html$Attributes$id = elm$html$Html$Attributes$stringProperty('id');
 var elm$virtual_dom$VirtualDom$Normal = function (a) {
 	return {$: 'Normal', a: a};
@@ -6468,9 +6204,11 @@ var author$project$Models$progress = function (pres) {
 	}();
 	return current / total;
 };
+var elm$core$String$fromFloat = _String_fromNumber;
 var author$project$Views$widthSpec = function (progress) {
 	return elm$core$String$fromFloat(progress * 100) + '%';
 };
+var elm$html$Html$Attributes$class = elm$html$Html$Attributes$stringProperty('className');
 var elm$virtual_dom$VirtualDom$style = _VirtualDom_style;
 var elm$html$Html$Attributes$style = elm$virtual_dom$VirtualDom$style;
 var author$project$Views$progressView = function (presentation) {
@@ -6501,13 +6239,8 @@ var author$project$Views$transformSpec = function (amount) {
 var author$project$Views$viewSlide = F2(
 	function (slide, position) {
 		var content = function () {
-			if (slide.$ === 'Simple') {
-				var c = slide.a;
-				return c;
-			} else {
-				var c = slide.a;
-				return c;
-			}
+			var c = slide.a;
+			return c;
 		}();
 		var containerStyle = _List_fromArray(
 			[

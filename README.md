@@ -13,4 +13,14 @@ To start
 npm start
 ```
 
-NB there are a few legacy things I haven't fully removed yet
+## Suggested next steps
+
+Themes (day/night mode?)
+Add stack (vertical slides)
+More shorcuts (skip forward by _)
+Interative things(?)
+
+## Changes
+
+14/2/2019 clean up
+13/2/2019 Initial frustrating port from 0.18 to 0.19

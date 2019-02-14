@@ -32,7 +32,6 @@ initialModel : Presentation
 initialModel =
     { position = At 0
     , slides = slideShow
-    , showCode = False
     }
 
 

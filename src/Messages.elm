@@ -8,4 +8,3 @@ type Msg
     | KeyDown RawKey
     | Next
     | Previous
-    | ToggleCode

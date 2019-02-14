@@ -24,16 +24,13 @@ update msg presentation =
         Previous ->
             ( prev presentation, Cmd.none )
 
-        ToggleCode ->
-            ( toggleCode presentation, Cmd.none )
-
 
 prev : Presentation -> Presentation
 prev presentation =
     case presentation.position of
         At n ->
             if n > 0 then
-                { presentation | position = Backward n (n - 1) 0.0, showCode = False }
+                { presentation | position = Backward n (n - 1) 0.0 }
 
             else
                 presentation
@@ -50,7 +47,7 @@ next presentation =
     case presentation.position of
         At n ->
             if n + 1 < length presentation.slides then
-                { presentation | position = Forward n (n + 1) 0.0, showCode = False }
+                { presentation | position = Forward n (n + 1) 0.0 }
 
             else
                 presentation
@@ -74,11 +71,6 @@ fastForward presentation =
 
         _ ->
             presentation
-
-
-toggleCode : Presentation -> Presentation
-toggleCode presentation =
-    { presentation | showCode = not presentation.showCode }
 
 
 timeUpdate : Float -> Presentation -> Presentation
@@ -116,10 +108,6 @@ timeUpdate time presentation =
 
 keyDown : RawKey -> Presentation -> Presentation
 keyDown key presentation =
-    let
-        _ =
-            Debug.log "key:" key
-    in
     case Keyboard.rawValue key of
         -- Left
         "ArrowLeft" ->

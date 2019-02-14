@@ -5,7 +5,7 @@ import Html exposing (Html, div, h1, h2, h3, pre, text)
 import Html.Attributes exposing (class, id, style)
 import Html.Events exposing (onClick)
 import Messages exposing (Msg(..))
-import Models exposing (Presentation, Slide(..), getCodeForSlideIfAt, progress, slides)
+import Models exposing (Presentation, Slide(..), progress, slides)
 
 
 view : Presentation -> Browser.Document Msg
@@ -45,9 +45,6 @@ viewSlide slide position =
         content =
             case slide of
                 Simple c ->
-                    c
-
-                WithCode c _ ->
                     c
     in
     div ([ class "slide" ] ++ containerStyle) [ content ]
