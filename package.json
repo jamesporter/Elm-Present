@@ -1,0 +1,16 @@
+{
+  "name": "present",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "elm-live ./src/Present.elm --open --start-page=./src/index.html -- --output=elm.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "elm": "^0.19.0-bugfix6",
+    "elm-live": "^3.4.0"
+  }
+}
