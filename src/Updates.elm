@@ -1,4 +1,4 @@
-module Updates exposing (fastForward, keyDown, next, prev, timeUpdate, update)
+module Updates exposing (update)
 
 import Array exposing (length)
 import Debug

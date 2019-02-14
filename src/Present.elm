@@ -1,15 +1,13 @@
-module Present exposing (animationSubs, init, initialModel, main, subscriptions)
+module Present exposing (main)
 
 import Browser
 import Browser.Events
-import Browser.Navigation as Nav
 import Html exposing (Html)
 import Keyboard
 import Messages exposing (Msg(..))
 import Models exposing (..)
 import SlideShow exposing (slideShow)
 import Updates exposing (..)
-import Url
 import Views exposing (view)
 
 

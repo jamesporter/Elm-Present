@@ -1,4 +1,4 @@
-module Views exposing (next, opacitySpec, prev, progressView, transformSpec, view, viewSlide, widthSpec)
+module Views exposing (view)
 
 import Browser
 import Html exposing (Html, div, h1, h2, h3, pre, text)

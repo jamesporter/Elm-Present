@@ -1,4 +1,4 @@
-module Models exposing (Position(..), Presentation, Slide(..), cleanSlides, progress, slides)
+module Models exposing (Position(..), Presentation, Slide(..), progress, slides)
 
 import Array exposing (Array, get)
 import Html exposing (Html)

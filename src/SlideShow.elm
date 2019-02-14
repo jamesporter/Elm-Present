@@ -1,11 +1,10 @@
-module SlideShow exposing (asHtml, simple, slideShow)
+module SlideShow exposing (simple, slideShow)
 
 import Array exposing (fromList)
 import Html exposing (Html, div, h1, h2, text)
 import Markdown exposing (toHtml)
 import Messages exposing (Msg)
 import Models exposing (Slide(..))
-import Visuals exposing (..)
 
 
 asHtml : String -> Html Msg
