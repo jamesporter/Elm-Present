@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "elm-live ./src/Present.elm --open --start-page=./src/index.html -- --output=elm.js"
+    "start": "elm-live ./src/Present.elm --open --start-page=./src/index.html -- --output=elm.js",
+    "start-windows": "elm-live .\\srcPresent.elm --open --start-page=.\\src\\index.html -- --output=elm.js"
   },
   "keywords": [],
   "author": "",
