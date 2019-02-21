@@ -27,6 +27,10 @@ update msg presentation =
 
 prev : Presentation -> Presentation
 prev presentation =
+    let
+        slidesLength =
+            length presentation.slides
+    in
     case presentation.position of
         At n ->
             if n > 0 then
@@ -35,8 +39,8 @@ prev presentation =
             else
                 presentation
 
-        Backward _ _ _ ->
-            presentation
+        Backward a b progress ->
+            { presentation | position = Backward a (clamp 0 slidesLength (b - 1)) progress }
 
         Forward from to progress ->
             { presentation | position = Backward to from (1.0 - progress) }
@@ -44,33 +48,23 @@ prev presentation =
 
 next : Presentation -> Presentation
 next presentation =
+    let
+        slidesLength =
+            length presentation.slides
+    in
     case presentation.position of
         At n ->
-            if n + 1 < length presentation.slides then
+            if n + 1 < slidesLength then
                 { presentation | position = Forward n (n + 1) 0.0 }
 
             else
                 presentation
 
-        Forward _ _ _ ->
-            presentation
+        Forward a b progress ->
+            { presentation | position = Forward a (clamp 0 (slidesLength - 1) (b + 1)) progress }
 
         Backward from to progress ->
             { presentation | position = Forward to from (1.0 - progress) }
-
-
-fastForward : Presentation -> Presentation
-fastForward presentation =
-    case presentation.position of
-        At n ->
-            if n + 5 < length presentation.slides then
-                { presentation | position = At (n + 5) }
-
-            else
-                { presentation | position = At (length presentation.slides - 1) }
-
-        _ ->
-            presentation
 
 
 timeUpdate : Float -> Presentation -> Presentation
@@ -109,15 +103,12 @@ timeUpdate time presentation =
 keyDown : RawKey -> Presentation -> Presentation
 keyDown key presentation =
     case Keyboard.rawValue key of
-        -- Left
         "ArrowLeft" ->
             prev presentation
 
-        -- Right
         "ArrowRight" ->
             next presentation
 
-        -- Esc
         "Escape" ->
             { presentation | position = At 0 }
 

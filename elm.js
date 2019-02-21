@@ -5900,20 +5900,34 @@ var elm$core$Array$length = function (_n0) {
 	var len = _n0.a;
 	return len;
 };
+var elm$core$Basics$clamp = F3(
+	function (low, high, number) {
+		return (_Utils_cmp(number, low) < 0) ? low : ((_Utils_cmp(number, high) > 0) ? high : number);
+	});
 var author$project$Updates$next = function (presentation) {
+	var slidesLength = elm$core$Array$length(presentation.slides);
 	var _n0 = presentation.position;
 	switch (_n0.$) {
 		case 'At':
 			var n = _n0.a;
-			return (_Utils_cmp(
-				n + 1,
-				elm$core$Array$length(presentation.slides)) < 0) ? _Utils_update(
+			return (_Utils_cmp(n + 1, slidesLength) < 0) ? _Utils_update(
 				presentation,
 				{
 					position: A3(author$project$Models$Forward, n, n + 1, 0.0)
 				}) : presentation;
 		case 'Forward':
-			return presentation;
+			var a = _n0.a;
+			var b = _n0.b;
+			var progress = _n0.c;
+			return _Utils_update(
+				presentation,
+				{
+					position: A3(
+						author$project$Models$Forward,
+						a,
+						A3(elm$core$Basics$clamp, 0, slidesLength - 1, b + 1),
+						progress)
+				});
 		default:
 			var from = _n0.a;
 			var to = _n0.b;
@@ -5930,6 +5944,7 @@ var author$project$Models$Backward = F3(
 		return {$: 'Backward', a: a, b: b, c: c};
 	});
 var author$project$Updates$prev = function (presentation) {
+	var slidesLength = elm$core$Array$length(presentation.slides);
 	var _n0 = presentation.position;
 	switch (_n0.$) {
 		case 'At':
@@ -5940,7 +5955,18 @@ var author$project$Updates$prev = function (presentation) {
 					position: A3(author$project$Models$Backward, n, n - 1, 0.0)
 				}) : presentation;
 		case 'Backward':
-			return presentation;
+			var a = _n0.a;
+			var b = _n0.b;
+			var progress = _n0.c;
+			return _Utils_update(
+				presentation,
+				{
+					position: A3(
+						author$project$Models$Backward,
+						a,
+						A3(elm$core$Basics$clamp, 0, slidesLength, b - 1),
+						progress)
+				});
 		default:
 			var from = _n0.a;
 			var to = _n0.b;
@@ -6184,8 +6210,7 @@ var author$project$Views$prev = A2(
 		]),
 	_List_Nil);
 var author$project$Models$progress = function (pres) {
-	var slds = pres.slides;
-	var total = elm$core$Array$length(slds);
+	var total = elm$core$Array$length(pres.slides);
 	var position = pres.position;
 	var current = function () {
 		switch (position.$) {
@@ -6194,12 +6219,14 @@ var author$project$Models$progress = function (pres) {
 				return n + 1;
 			case 'Forward':
 				var from = position.a;
+				var to = position.b;
 				var p = position.c;
-				return (from + 1.0) + p;
+				return (1 + from) + ((to - from) * p);
 			default:
 				var from = position.a;
+				var to = position.b;
 				var p = position.c;
-				return (from + 1.0) - p;
+				return (1 + from) - ((from - to) * p);
 		}
 	}();
 	return current / total;

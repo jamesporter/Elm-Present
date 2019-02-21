@@ -71,21 +71,18 @@ progress pres =
         position =
             pres.position
 
-        slds =
-            pres.slides
-
         total =
-            toFloat <| Array.length slds
+            toFloat <| Array.length pres.slides
 
         current =
             case position of
                 At n ->
                     toFloat <| n + 1
 
-                Forward from _ p ->
-                    toFloat from + 1.0 + p
+                Forward from to p ->
+                    toFloat (1 + from) + toFloat (to - from) * p
 
-                Backward from _ p ->
-                    toFloat from + 1.0 - p
+                Backward from to p ->
+                    toFloat (1 + from) - toFloat (from - to) * p
     in
     current / total
